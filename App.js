@@ -1,49 +1,102 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React, { Component } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
+import {Button,Icon} from 'react-native-elements';
+import { Navigation } from 'react-native-navigation';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {appName,color} from './src/config/config';
+import {GlobalStyles} from './src/styles/styles';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+class App extends Component {
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
+  componentDidMount(){
+   
   }
+
+  goToScreen = (screen) => {
+    Navigation.push(this.props.componentId,{
+      component : {
+        name : screen,
+        options : {}
+      }
+    })
+  }
+
+  render(){
+    return(
+      <View style={GlobalStyles.containerCenter}>
+
+        <Text style={GlobalStyles.screenTitle}>Welcome to {appName}</Text>
+
+        <View style={GlobalStyles.row}>
+          
+          <Button title={""} icon={
+            <Icon name={"login"} type={"antdesign"} color={"white"} />
+          }
+          buttonStyle={[GlobalStyles.circle,GlobalStyles.primary]}
+            onPress={() => this.goToScreen('Login')}
+          />
+
+          <Button title={""} icon={
+            <Icon name={"chat-processing"} type={"material-community"} color={"white"} />
+          }
+            buttonStyle={[GlobalStyles.circle,GlobalStyles.primary]}
+            onPress={() => this.goToScreen('Chat')}
+          />
+
+          <Button title={""} icon={
+            <Icon name={"user"} type={"antdesign"} color={"white"} />
+          }
+            buttonStyle={[GlobalStyles.circle,GlobalStyles.primary]}
+            onPress={() => this.goToScreen('Profile')}
+          />
+
+          <Button title={""} icon={
+            <Icon name={"picture"} type={"antdesign"} color={"white"} />
+          }
+            buttonStyle={[GlobalStyles.circle,GlobalStyles.primary]}
+            onPress={() => this.goToScreen('Gallery')}
+          />
+
+
+        </View>
+
+        <View style={GlobalStyles.row}>
+
+          <Button title={""} icon={
+            <Icon name={"speedometer"} type={"material-community"} color={"white"} />
+          }
+            buttonStyle={[GlobalStyles.circle,GlobalStyles.primary]}
+            onPress={() => this.goToScreen('Dashboard')}
+          />
+          
+          <Button title={""} icon={
+            <Icon name={"home"} type={"antdesign"} color={"white"} />
+          }
+          buttonStyle={[GlobalStyles.circle,GlobalStyles.primary]}
+            onPress={() => this.goToScreen('Home')}
+          />
+
+          <Button title={""} icon={
+            <Icon name={"bell"} type={"material-community"} color={"white"} />
+          }
+            buttonStyle={[GlobalStyles.circle,GlobalStyles.primary]}
+            onPress={() => this.goToScreen('Notification')}
+          />
+
+        </View>
+
+      </View>
+    )
+  }
+
 }
 
+export default App;
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  
+})
