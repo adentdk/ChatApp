@@ -11,8 +11,8 @@ export const GlobalStyles = StyleSheet.create({
     },
 
     inputContainerStyle : {
-        borderWidth:0.5,
-        backgroundColor:"rgba(0,0,0,0.05)",
+        borderWidth:0.7,
+        backgroundColor:"rgba(0,0,0,0.07)",
         borderRadius:10,
         margin:5,
         height:40,
@@ -38,6 +38,10 @@ export const GlobalStyles = StyleSheet.create({
         textAlign : 'center'
     },
     
+    textLight : {
+        color : color.light
+    },
+
     // shape
     circle : {
         height:60,

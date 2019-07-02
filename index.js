@@ -1,11 +1,19 @@
 import { Navigation } from "react-native-navigation"
 import App from "./App";
-import Login from "./src/screens/Login";
+import Login from "./src/screens/Login/Login";
+import ChatList from "./src/screens/ChatList/ChatList";
+import ChatRoom from "./src/screens/ChatRoom/ChatRoom";
+import Call from "./src/screens/Call/Call";
+import Status from "./src/screens/Status/Status";
+
 import {color} from "./src/config/config";
 
 Navigation.registerComponent(`App`, () => App);
-Navigation.registerComponent(`app.Drawer`, () => App);
 Navigation.registerComponent(`Login`, () => Login);
+Navigation.registerComponent(`ChatList`, () => ChatList);
+Navigation.registerComponent(`ChatRoom`, () => ChatRoom);
+Navigation.registerComponent(`Call`, () => Call);
+Navigation.registerComponent(`Status`, () => Status);
 
 Navigation.setDefaultOptions({
     topBar: {
@@ -21,88 +29,31 @@ Navigation.setDefaultOptions({
 Navigation.events().registerAppLaunchedListener(() => {
 
   Navigation.setRoot({
+
     root: {
-      sideMenu: {
-      left: {
-        component: {
-          name: 'app.Drawer',
-        },
-      },
-        center: {
-          bottomTabs: {
-                   options: {
-                     bottomTabs: {
-                     animate: true,
-                     titleDisplayMode:'alwaysHide'
-                     }
-                   },
-                   children: [
-                   {
-                     stack: {
-                       children: [{ component: {  name: 'Login' } }],
-                       options: {
-                         bottomTab: {
-                           animate: false,
-                           icon: require('./src/icons/icon1.png'),
-                           testID: 'FIRST_TAB_BAR_BUTTON'
-                         }
-                       }
-                     }
-                   },
-                   {
-                     stack: {
-                       children: [{ component: {  name: 'App' } }],
-                       options: {
-                         bottomTab: {
-                           icon: require('./src/icons/icon2.png'),
-                           testID: 'SECOND_TAB_BAR_BUTTON'
-                         }
-                       }
-                     }
-                   },
-                 ],
-                 },
-          }
+      stack: {
+          id: 'App',
+          children: [
+            {
+              component: {
+                  name: "App"
+              }
+            },
+          ]
       }
     }
   });
 
-  //  Navigation.setRoot({
-  //   root: {
-  //     bottomTabs: {
-  //       options: {
-  //         bottomTabs: {
-  //         animate: true,
-  //         titleDisplayMode:'alwaysHide'
-  //         }
-  //       },
-  //       children: [
-  //       {
-  //         stack: {
-  //           children: [{ component: {  name: 'Login' } }],
-  //           options: {
-  //             bottomTab: {
-  //               animate: false,
-  //               icon: require('./src/icons/icon1.png'),
-  //               testID: 'FIRST_TAB_BAR_BUTTON'
-  //             }
-  //           }
-  //         }
-  //       },
-  //       {
-  //         stack: {
-  //           children: [{ component: {  name: 'App' } }],
-  //           options: {
-  //             bottomTab: {
-  //               icon: require('./src/icons/icon2.png'),
-  //               testID: 'SECOND_TAB_BAR_BUTTON'
-  //             }
-  //           }
-  //         }
-  //       },
-  //     ],
-  //     },
-  //   }
-  // });
-
 });
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-export const appName = "ReactApp Template";
+export const appName = "ChatApp";
 
 
 export const color = {

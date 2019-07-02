@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 import {Icon,Header} from 'react-native-elements';
 
+import {color} from '../config/config'
+
 import {GlobalStyles} from '../styles/styles';
 import { Navigation } from 'react-native-navigation';
 
@@ -32,6 +34,8 @@ const styles = StyleSheet.create({
     left:0,
     height:60,
     padding:10,
+    borderBottomWidth:0.5,
+    borderBottomColor:color.secondary
   }
 })
 
