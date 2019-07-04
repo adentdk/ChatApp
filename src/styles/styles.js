@@ -4,6 +4,12 @@ import {color} from '../config/config'
 export const GlobalStyles = StyleSheet.create({
 
     // container
+    containerFlexStart: {
+        justifyContent : 'flex-start',
+        flex : 1,
+        backgroundColor : color.light
+    },
+
     containerCenter : {
         justifyContent : 'center',
         flex : 1,

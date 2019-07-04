@@ -6,6 +6,7 @@ export const color = {
     secondary : "#26A69A",
     other : "#80CBC4", 
     dark : "#34495e",
-    light : "#E0F2F1"
+    light : "#E0F2F1",
 
+    secondaryT : "rgba(38,166,154,0.1)"
 };

@@ -3,49 +3,96 @@ import {color} from '../config/config'
 
 export const Authenticated = () => Navigation.setRoot({
     root: {
-      bottomTabs: {
-        options: {
+      sideMenu: {
+        left: {
+          component: {
+            name: 'SideMenu',
+          },
+        },
+        center: {
           bottomTabs: {
-          animate: true,
-          titleDisplayMode:'alwaysHide',
-          backgroundColor: color.primary
-          }
-        },
-        children: [
-        {
-          stack: {
-            children: [{ component: {  name: 'ChatList' } }],
             options: {
-              bottomTab: {
-                icon: require('../icons/chat.png'),
-                testID: 'FIRST_TAB_BAR_BUTTON'
+              bottomTabs: {
+              animate: true,
+              titleDisplayMode:'alwaysHide',
+              backgroundColor: color.primary
               }
-            }
-          }
-        },
-        {
-          stack: {
-            children: [{ component: {  name: 'Status' } }],
-            options: {
-              bottomTab: {
-                icon: require('../icons/status.png'),
-                testID: 'SECOND_TAB_BAR_BUTTON'
+            },
+            children: [
+            {
+              stack: {
+                children: [{ component: {  name: 'ChatList' } }],
+                options: {
+                  bottomTab: {
+                    icon: require('../icons/chat.png'),
+                    testID: 'FIRST_TAB_BAR_BUTTON'
+                  }
+                }
               }
-            }
-          }
-        },
-        {
-          stack: {
-            children: [{ component: {  name: 'Call' } }],
-            options: {
-              bottomTab: {
-                icon: require('../icons/phone.png'),
-                testID: 'THIRD_TAB_BAR_BUTTON'
+            },
+            {
+              stack: {
+                children: [{ component: {  name: 'Status' } }],
+                options: {
+                  bottomTab: {
+                    icon: require('../icons/status.png'),
+                    testID: 'SECOND_TAB_BAR_BUTTON'
+                  }
+                }
               }
-            }
-          }
-        },
-      ],
-      },
+            },
+            {
+              stack: {
+                children: [{ component: {  name: 'Call' } }],
+                options: {
+                  bottomTab: {
+                    icon: require('../icons/phone.png'),
+                    testID: 'THIRD_TAB_BAR_BUTTON'
+                  }
+                }
+              }
+            },
+          ],
+          },
+        }
+      }
     }
-  });
+});
+
+export const UnAuthenticated = () => Navigation.setRoot({
+
+  root: {
+    stack: {
+        id: 'App',
+        children: [
+          {
+            component: {
+                name: "App"
+            }
+          },
+        ]
+    }
+  }
+  
+})
+
+export const ModalNavigation = (passProps) => Navigation.showModal({
+  stack: {
+    children: [{
+      component: {
+        name: 'CreateConversation',
+        passProps: {
+          data: passProps
+        },
+        options: {
+          topBar: {
+            title: {
+              text: 'Modal'
+            }
+          }
+        }
+      }
+    }]
+  }
+});
+

@@ -29,10 +29,11 @@ class Login extends Component {
       isLoading : true
     })
     const config = {
-      header : {
+      headers : {
         "Content-Type" : "application/json"
       }
     }
+    
     axios.post('http://192.168.0.18:3333/auth/login',{
       "email" : this.state.emailValue,
       "password" : this.state.passwordValue
@@ -51,8 +52,7 @@ class Login extends Component {
       console.log(error)
       Alert.alert(
         '',
-        'Login failed, make sure your email and your password correct',
-        {text:'close'}
+        'Login failed, make sure your email and your password correct'
       )
     })
   }
@@ -81,7 +81,7 @@ class Login extends Component {
           />
 
           <Input placeholder={"Input your password"}
-              secureTextEntry={true}
+              secureTextEntry={this.state.passwordHidden}
               placeholderTextColor={"#aaa"}
               keyboardType={"default"}
               value={this.state.passwordValue}
@@ -96,7 +96,12 @@ class Login extends Component {
               rightIcon={
                 (this.state.passwordValue)
                 ? 
-                <Icon name={"eyeo"} type={"antdesign"} color={"#999"} size={16} containerStyle={{paddingRight:15}} /> 
+                <Icon name={"eyeo"} type={"antdesign"} color={"#999"} size={16} containerStyle={{paddingRight:15}}
+                  onPress={() => {
+                    this.setState({
+                      passwordHidden : !this.state.passwordHidden
+                    })
+                  }} /> 
                 :
                 <Icon />
               }

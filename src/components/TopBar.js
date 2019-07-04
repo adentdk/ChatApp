@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Text,
   StyleSheet,
 } from 'react-native';
 import {Icon,Header} from 'react-native-elements';
@@ -14,9 +15,27 @@ class TopBar extends Component {
 
   render(){
     return(
-        <Header 
-            leftComponent={<Icon name="arrowleft" type="antdesign" color="white" onPress={() => {Navigation.pop(this.props.componentId)}}/>}
-            centerComponent={{ text: this.props.screenName, style: { color: '#fff' } }}
+        <Header
+            leftComponent={
+              
+              (this.props.componentId) ?
+                <Icon name="arrowleft"
+                      type="antdesign"
+                      color="white" 
+                      onPress={() => {
+                      Navigation.pop(this.props.componentId)
+                      {
+                        (this.props.refreshing != null)
+                        ?
+                        this.props.refreshing()
+                        :
+                        () => {}
+                      }
+                  }}/> 
+                : 
+                <Text/>
+            }
+            centerComponent={{ text: this.props.screenName, style: { color: '#fff',fontSize:20 } }}
             containerStyle={[GlobalStyles.primary,styles.header]}
         />
     )
@@ -28,7 +47,7 @@ export default TopBar;
 
 const styles = StyleSheet.create({
   header : {
-    position :'absolute',
+    position :'relative',
     top:0,
     right:0,
     left:0,
