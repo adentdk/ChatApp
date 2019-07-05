@@ -1,79 +1,50 @@
-import {Navigation} from 'react-native-navigation';
-import {color} from '../config/config'
+import { Navigation } from 'react-native-navigation';
+import { color } from '../config/config'
 
 export const Authenticated = () => Navigation.setRoot({
-    root: {
-      sideMenu: {
-        left: {
-          component: {
-            name: 'SideMenu',
-          },
+  root: {    
+      stack: {
+        options : {
+          topBar : {
+            visible : true,
+            drawBehind: false,
+            background :{
+               color :color.primary,
+              translucent : false,
+            }
+          }
         },
-        center: {
-          bottomTabs: {
-            options: {
-              bottomTabs: {
-              animate: true,
-              titleDisplayMode:'alwaysHide',
-              backgroundColor: color.primary
-              }
-            },
-            children: [
-            {
-              stack: {
-                children: [{ component: {  name: 'ChatList' } }],
-                options: {
-                  bottomTab: {
-                    icon: require('../icons/chat.png'),
-                    testID: 'FIRST_TAB_BAR_BUTTON'
+        children: [
+          { 
+            component: { 
+              name: 'ChatList',
+              options : {
+                topBar : {
+                  title : {
+                    text : "ChatList"
                   }
                 }
               }
-            },
-            {
-              stack: {
-                children: [{ component: {  name: 'Status' } }],
-                options: {
-                  bottomTab: {
-                    icon: require('../icons/status.png'),
-                    testID: 'SECOND_TAB_BAR_BUTTON'
-                  }
-                }
-              }
-            },
-            {
-              stack: {
-                children: [{ component: {  name: 'Call' } }],
-                options: {
-                  bottomTab: {
-                    icon: require('../icons/phone.png'),
-                    testID: 'THIRD_TAB_BAR_BUTTON'
-                  }
-                }
-              }
-            },
-          ],
-          },
-        }
+            } 
+          }
+        ],
       }
-    }
-});
+  }
+})
 
 export const UnAuthenticated = () => Navigation.setRoot({
-
   root: {
     stack: {
-        id: 'App',
-        children: [
-          {
-            component: {
-                name: "App"
-            }
-          },
-        ]
+      id: 'App',
+      children: [
+        {
+          component: {
+            name: "Login"
+          }
+        },
+      ]
     }
   }
-  
 })
 
 export const ModalNavigation = (passProps) => Navigation.showModal({

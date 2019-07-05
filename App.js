@@ -10,7 +10,7 @@ import {Button,Icon} from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 
 
-import {Authenticated} from './src/router/router'
+import {Authenticated,UnAuthenticated} from './src/router/router'
 
 import {appName,color} from './src/config/config';
 import {GlobalStyles} from './src/styles/styles';
@@ -24,6 +24,8 @@ class App extends Component {
       console.log(err);
       if(value != null){
         Authenticated()
+      }else{
+	UnAuthenticated()
       }
     })
   }
@@ -45,18 +47,10 @@ class App extends Component {
     return(
       <View style={GlobalStyles.containerCenter}>
 
-        <View style={styles.titleWraper}>
-          <Text style={GlobalStyles.screenTitle}>Welcome to {appName}</Text>
-        </View>
-
         <View style={styles.imgWrapper}>
           <Image source={require('./src/img/Chat.png')} height={300} width={300} style={styles.img}/>
         </View>
-        
-        <Button title={"Sign in to start"}
-          buttonStyle={styles.buttonSignin}
-          onPress={() => this.goToScreen('Login')}
-        />
+       
       </View>
     )
   }
