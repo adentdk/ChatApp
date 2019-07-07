@@ -4,13 +4,10 @@ import {
     Text,
     StyleSheet,
     AsyncStorage,
-    Alert,
-    TouchableOpacity,
-    TouchableHighlight,
-    ScrollView,
-    FlatList
+    FlatList,
+    Alert
 } from 'react-native';
-import { Input, Icon, Button, Overlay } from 'react-native-elements';
+import { Input, Icon, Button, Overlay, ListItem } from 'react-native-elements';
 
 import axios from 'axios';
 
@@ -38,21 +35,31 @@ class DetailConversation extends Component {
         axios.get(`http://192.168.0.18:3333/api/v1/conversations/${this.props.conversationId}`,config)
         .then(result => {
             this.setState({
-                details : result.data
+                details : result.data[0]
             })
+
             
         }).catch(err => {
-            alert.alert('','error')
+            Alert.alert('','error')
             console.log(err);
             
         })
     }
 
     render() {
+        if(this.state.details.length < 1)
+        {
+            return <View />
+        }
         return(
-            
-            <View style={GlobalStyles.containerFlexStart}>
-                <Text>Details Conversation</Text>
+            <View style={[GlobalStyles.containerFlexStart,{backgroundColor:'white'}]}>
+                <ListItem subtitle={"GroupMember"} containerStyle={{height:30,borderBottomWidth:0.4}}/>
+                <FlatList keyExtractor={(item, index) => index.toString()}
+                    data={this.state.details.group.users}
+                    renderItem={({ item }) =>
+                       <ListItem title={item.name} />
+                    }
+                />
             </View>
             
         )

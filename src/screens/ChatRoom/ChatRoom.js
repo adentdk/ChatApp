@@ -8,7 +8,8 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     ScrollView,
-    FlatList
+    FlatList,
+    Image
 } from 'react-native';
 import { Input, Icon, Button, Overlay } from 'react-native-elements';
 
@@ -230,10 +231,10 @@ class ChatRoom extends Component {
 
                         :
 
-                        <View style={{ flex: 1 }}>
+                        <View style={{ flex: 1, justifyContent:"center",alignItems:'center' }}>
 
-                            <Text>Loading</Text>
-
+                                <Text>Loading</Text>
+                            
                         </View>
                 }
                 <View>

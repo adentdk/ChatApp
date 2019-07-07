@@ -25,7 +25,8 @@ import { ModalNavigation } from '../../router/router'
 class ChatList extends Component {
 
     state = {
-        conversation: [],
+        personal: [],
+        group : [],
         isLoading: false,
         menuVisible: false,
         refreshing: false,
@@ -59,7 +60,8 @@ class ChatList extends Component {
                 this.setState({
                     isLoading: false,
                     refreshing: false,
-                    conversation: result.data
+                    personal: result.data.personal,
+                    group : result.data.group
                 })
             }).catch(error => {
                 console.log(error)
@@ -106,47 +108,20 @@ class ChatList extends Component {
 
     render() {
         return (
-            <View style={GlobalStyles.containerFlexStart}>
+            <View style={[GlobalStyles.containerFlexStart,{backgroundColor:'white'}]}>
+
                 <FlatList keyExtractor={(item, index) => index.toString()}
-                    data={this.state.conversation}
+                    data={this.state.group}
                     refreshing={this.state.refreshing}
                     onRefresh={this._handleRefreshing}
                     renderItem={({ item }) =>
-                        <ConversationItem data={item} componentId={this.props.componentId}
+                        <ConversationGroupItem data={item} componentId={this.props.componentId}
                             _handleDeleteConversation={this._handleDeleteConversation}
                             _handleRefreshingConversation={this._handleRefreshing} />
                     }
                 />
 
-                <View style={{ position: "absolute", bottom: 20, right: 20, backgroundColor: color.secondary, height: 40, width: 40, borderRadius: 20 }}>
-                    <TouchableHighlight underlayColor={"rgba(0,0,0,.1)"}
-                        onPress={() => {
-                            this.setState({
-                                menuVisible: true
-                            })
-                        }}>
-                        <Image source={require('../../icons/plus.png')} style={{ height: 40, width: 40 }} />
-                    </TouchableHighlight>
-                </View>
-
-                <Overlay isVisible={this.state.menuVisible}
-                    height={"auto"}
-                    onBackdropPress={() => this.setState({ menuVisible: false })}>
-
-                    <TouchableHighlight underlayColor={"rgba(0,0,0,0.1)"} style={{ padding: 10 }}
-                        onPress={() => {
-                            ModalNavigation(this._handleRefreshing)
-                            this.setState({
-                                menuVisible: false
-                            })
-                        }}>
-                        <Text>Create a new conversation</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight underlayColor={"rgba(0,0,0,0.1)"} style={{ padding: 10 }}
-                        onPress={() => { }}>
-                        <Text>Create a new group</Text>
-                    </TouchableHighlight>
-                </Overlay>
+                
 
 
             </View>
@@ -156,7 +131,8 @@ class ChatList extends Component {
 
 export default ChatList
 
-class ConversationItem extends Component {
+
+class ConversationGroupItem extends Component {
 
 
     constructor() {
@@ -171,7 +147,7 @@ class ConversationItem extends Component {
     componentWillReceiveProps() {
         this.setState({
             data: this.props.data,
-            chat: this.props.data.chat
+            chat: this.props.data.conversation.chat
         })
     }
 
@@ -205,13 +181,13 @@ class ConversationItem extends Component {
                             component: {
                                 name: 'ChatRoom',
                                 passProps: {
-                                    conversation_id: this.state.data.id,
+                                    conversation_id: this.state.data.conversation.id,
                                     _handleRefreshingConversation: this.props._handleRefreshingConversation
                                 },
                                 options: {
                                     topBar: {
                                         title: {
-                                            text: (this.state.data.type == 'personal') ? this.state.data.partner : this.state.data.group
+                                            text: this.state.data.name
                                         },
                                         rightButtons: {
                                             id: "rightButtonConversation",
@@ -219,7 +195,7 @@ class ConversationItem extends Component {
                                                 name: "RightButton",
                                                 passProps : {
                                                     action : "infoConversation",
-                                                    conversationId : this.state.data.id,
+                                                    conversationId : this.state.data.conversation.id,
                                                     parentComponentId : "Component5"
                                                 }
                                             }
@@ -231,10 +207,7 @@ class ConversationItem extends Component {
                     }}
                     onLongPress={() => this.setState({ menuVisible: true })}>
                     <ListItem title={
-                        (this.state.data.type == 'personal') ?
-                            this.state.data.partner
-                            :
-                            this.state.data.group
+                            this.state.data.name
                     }
                         titleStyle={{ fontSize: 16, fontWeight: '500' }}
                         subtitle={
@@ -244,11 +217,7 @@ class ConversationItem extends Component {
                                 <Text style={{ fontStyle: 'italic' }}>empty chat</Text>
                         }
                         leftAvatar={{
-                            source:
-                                (this.state.data.type == 'personal') ?
-                                    require('../../img/user.png')
-                                    :
-                                    require('../../img/group.png')
+                            source: { uri : this.state.data.avatar}
                             , size: 35
                         }}
                         rightElement={
@@ -256,7 +225,7 @@ class ConversationItem extends Component {
                                 <Text>{this._chatDate()}</Text>
                             </View>
                         }
-                        containerStyle={{ borderBottomWidth: 0.5 }}
+                        containerStyle={{ borderBottomWidth: 0.4 }}
                     />
                 </TouchableHighlight>
                 <Overlay isVisible={this.state.menuVisible}
@@ -280,3 +249,208 @@ class ConversationItem extends Component {
         )
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <View style={{ position: "absolute", bottom: 20, right: 20, backgroundColor: color.secondary, height: 40, width: 40, borderRadius: 20 }}>
+                    <TouchableHighlight underlayColor={"rgba(0,0,0,.1)"}
+                        onPress={() => {
+                            this.setState({
+                                menuVisible: true
+                            })
+                        }}>
+                        <Image source={require('../../icons/plus.png')} style={{ height: 40, width: 40 }} />
+                    </TouchableHighlight>
+                </View>
+
+                <Overlay isVisible={this.state.menuVisible}
+                    height={"auto"}
+                    onBackdropPress={() => this.setState({ menuVisible: false })}>
+
+                    <TouchableHighlight underlayColor={"rgba(0,0,0,0.1)"} style={{ padding: 10 }}
+                        onPress={() => {
+                            ModalNavigation(this._handleRefreshing)
+                            this.setState({
+                                menuVisible: false
+                            })
+                        }}>
+                        <Text>Create a new conversation</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight underlayColor={"rgba(0,0,0,0.1)"} style={{ padding: 10 }}
+                        onPress={() => { }}>
+                        <Text>Create a new group</Text>
+                    </TouchableHighlight>
+                </Overlay> */}
+
+
+{/* <FlatList keyExtractor={(item, index) => index.toString()}
+                    data={this.state.personal}
+                    refreshing={this.state.refreshing}
+                    onRefresh={this._handleRefreshing}
+                    renderItem={({ item }) =>
+                        <ConversationItem data={item} componentId={this.props.componentId}
+                            _handleDeleteConversation={this._handleDeleteConversation}
+                            _handleRefreshingConversation={this._handleRefreshing} />
+                    }
+                /> */}
+                class ConversationItem extends Component {
+
+
+                    constructor() {
+                        super()
+                        this.state = {
+                            data: [],
+                            chat: [],
+                            menuVisible: false,
+                        }
+                    }
+                
+                    componentWillReceiveProps() {
+                        this.setState({
+                            data: this.props.data,
+                            chat: this.props.data.chat
+                        })
+                    }
+                
+                    _chatDate = () => {
+                        const dateNow = '2019-07-04'
+                        if (this.state.chat.length > 0) {
+                
+                            const chatDate = this.state.chat[0].created_at.split(' ')
+                            const date = chatDate[0].split('-');
+                            const time = chatDate[1].split(':')
+                
+                            if (dateNow == chatDate[0]) {
+                                return `${time[0]}:${time[1]}`
+                            } else {
+                                return `${date[2]}-${date[1]}-${date[0]}`
+                            }
+                        }
+                    }
+                
+                    render() {
+                        if (this.state.data.length < 1) {
+                            return (
+                                <Text />
+                            )
+                        }
+                        return (
+                            <View>
+                                <TouchableHighlight underlayColor={"#aaa"}
+                                    onPress={() => {
+                                        Navigation.push(this.props.componentId, {
+                                            component: {
+                                                name: 'ChatRoom',
+                                                passProps: {
+                                                    conversation_id: this.state.data.id,
+                                                    _handleRefreshingConversation: this.props._handleRefreshingConversation
+                                                },
+                                                options: {
+                                                    topBar: {
+                                                        title: {
+                                                            text: (this.state.data.type == 'personal') ? this.state.data.partner : this.state.data.group
+                                                        },
+                                                        rightButtons: {
+                                                            id: "rightButtonConversation",
+                                                            component: {
+                                                                name: "RightButton",
+                                                                passProps : {
+                                                                    action : "infoConversation",
+                                                                    conversationId : this.state.data.id,
+                                                                    parentComponentId : "Component5"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                        })
+                                    }}
+                                    onLongPress={() => this.setState({ menuVisible: true })}>
+                                    <ListItem title={
+                                        (this.state.data.type == 'personal') ?
+                                            this.state.data.partner
+                                            :
+                                            this.state.data.group
+                                    }
+                                        titleStyle={{ fontSize: 16, fontWeight: '500' }}
+                                        subtitle={
+                                            (this.state.chat.length > 0) ?
+                                                this.state.chat[0].message
+                                                :
+                                                <Text style={{ fontStyle: 'italic' }}>empty chat</Text>
+                                        }
+                                        leftAvatar={{
+                                            source:
+                                                (this.state.data.type == 'personal') ?
+                                                    require('../../img/user.png')
+                                                    :
+                                                    require('../../img/group.png')
+                                            , size: 35
+                                        }}
+                                        rightElement={
+                                            <View style={{ alignItems: 'flex-end' }}>
+                                                <Text>{this._chatDate()}</Text>
+                                            </View>
+                                        }
+                                        containerStyle={{ borderBottomWidth: 0.5 }}
+                                    />
+                                </TouchableHighlight>
+                                <Overlay isVisible={this.state.menuVisible}
+                                    height={"auto"}
+                                    onBackdropPress={() => this.setState({ menuVisible: false })}>
+                                    <TouchableHighlight onPress={() => {
+                                        Alert.alert(
+                                            '',
+                                            'are you sure?',
+                                            [
+                                                { text: "cancel" },
+                                                { text: "yes", onPress: () => this.props._handleDeleteConversation(this.state.data.id) }
+                                            ])
+                                        this.setState({ menuVisible: false })
+                                    }}
+                                        style={{ padding: 10 }}>
+                                        <Text>Delete Conversation</Text>
+                                    </TouchableHighlight>
+                                </Overlay>
+                            </View>
+                        )
+                    }
+                }
